@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: API de Clientes
+  version: 1.0.0
+  description: Documentación de la API de clientes utilizando Swagger
+servers:
+  - url: http://localhost:8080
+    description: Servidor de desarrollo
+
+paths:
+  /creacliente:
+    post:
+      summary: Crear un nuevo cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nombre
+                - apellido
+                - edad
+                - fechaNacimiento
+              properties:
+                nombre:
+                  type: string
+                apellido:
+                  type: string
+                edad:
+                  type: integer
+                fechaNacimiento:
+                  type: string
+                  format: date
+      responses:
+        '201':
+          description: Éxito, cliente creado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nombre:
+                    type: string
+                  apellido:
+                    type: string
+                  edad:
+                    type: integer
+                  fechaNacimiento:
+                    type: string
+                    format: date
+        '400':
+          description: Error en la solicitud, datos de cliente inválidos
+        '500':
+          description: Error interno del servidor
+
+  /kpideclientes:
+    get:
+      summary: Obtener estadísticas de los clientes
+      responses:
+        '200':
+          description: Éxito, estadísticas obtenidas correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  promedioEdad:
+                    type: number
+                  desviacionEstandar:
+                    type: number
+        '500':
+          description: Error interno del servidor
+
+  /listclientes:
+    get:
+      summary: Obtener lista de clientes con fecha probable de muerte
+      responses:
+        '200':
+          description: Éxito, lista de clientes con fecha probable de muerte obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nombre:
+                      type: string
+                    apellido:
+                      type: string
+                    edad:
+                      type: integer
+                    fechaNacimiento:
+                      type: string
+                      format: date
+        '500':
+          description: Error interno del servidor
